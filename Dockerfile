@@ -9,8 +9,11 @@ RUN \
 RUN \
     cd ${HOME} && \
     git clone https://github.com/phalcon/cphalcon.git && \
-    cd cphalcon/build && \
-    ./install && \
+    cd cphalcon/build/php7/64bits && \
+    phpize && \
+    export CFLAGS="-O2 -g" && \
+    ./configure && \
+    make && make install && \
     docker-php-ext-enable phalcon && \
     rm -rf ${HOME}/cphalcon
     
