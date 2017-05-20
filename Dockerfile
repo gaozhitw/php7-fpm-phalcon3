@@ -2,7 +2,7 @@ FROM php:7.0-fpm
 
 RUN \
     apt-get update && \
-    apt-get install -y git libwebp-dev libjpeg62-turbo-dev libpng12-dev libfreetype6-dev libmcrypt-dev libssl-dev && \
+    apt-get install -y git libwebp-dev libjpeg62-turbo-dev libpng12-dev libfreetype6-dev libmcrypt-dev libssl-dev libgmp-dev libicu-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/list/*
 
@@ -30,7 +30,10 @@ RUN \
     docker-php-ext-configure opcache && \
     docker-php-ext-configure exif && \
     docker-php-ext-configure mcrypt && \
-    docker-php-ext-install pdo_mysql mbstring sockets gd opcache exif mcrypt
+    docker-php-ext-configure gmp && \
+    docker-php-ext-configure bcmath && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install pdo_mysql mbstring sockets gd opcache exif mcrypt gmp bcmath intl
 
 RUN \
     mkdir -p ${HOME}/php-default-conf && \
