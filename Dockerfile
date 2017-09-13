@@ -19,7 +19,8 @@ RUN \
     
 RUN \
     pecl install redis && \
-    docker-php-ext-enable redis && \
+    pecl install xdebug && \
+    docker-php-ext-enable redis xdebug && \
     pecl clear-cache
 
 RUN \
