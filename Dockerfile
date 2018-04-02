@@ -2,7 +2,7 @@ FROM php:7.2-fpm
 
 RUN \
     apt-get update && \
-    apt-get install -y git libwebp-dev libjpeg62-turbo-dev libpng-dev libfreetype6-dev libmcrypt-dev libssl-dev libgmp-dev libicu-dev && \
+    apt-get install -y git libwebp-dev libjpeg62-turbo-dev libpng-dev libfreetype6-dev libmcrypt-dev libssl-dev libgmp-dev libicu-dev procps && \
     apt-get clean && \
     rm -rf /var/lib/apt/list/*
 
