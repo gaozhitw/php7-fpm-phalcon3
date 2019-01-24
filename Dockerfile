@@ -7,6 +7,12 @@ RUN \
     rm -rf /var/lib/apt/list/*
 
 RUN \
+    pecl install psr && \
+    pecl install redis && \
+    docker-php-ext-enable psr redis && \
+    pecl clear-cache
+
+RUN \
     cd ${HOME} && \
     git clone https://github.com/phalcon/cphalcon.git && \
     cd cphalcon/build/php7/64bits && \
@@ -16,11 +22,6 @@ RUN \
     make && make install && \
     docker-php-ext-enable phalcon && \
     rm -rf ${HOME}/cphalcon
-    
-RUN \
-    pecl install redis && \
-    docker-php-ext-enable redis && \
-    pecl clear-cache
 
 RUN \
     docker-php-ext-configure pdo_mysql && \
