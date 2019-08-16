@@ -12,7 +12,7 @@ RUN \
     cd ${HOME} && \
     git clone https://github.com/phalcon/cphalcon.git && \
     cd cphalcon && \
-    git checkout v3.4.2 && \
+    git checkout v3.4.4 && \
     cd build/php7/64bits && \
     phpize && \
     export CFLAGS="-O2 -g" && \
