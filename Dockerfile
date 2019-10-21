@@ -2,7 +2,11 @@ FROM php:7.2-fpm AS builder
 
 RUN \
     apt-get update && \
-    apt-get install -y git libwebp-dev libjpeg62-turbo-dev libpng-dev libfreetype6-dev libgmp-dev libicu-dev
+    apt-get install -y git libwebp-dev libjpeg-dev libpng-dev libfreetype6-dev libgmp-dev libicu-dev
+
+RUN \
+    docker-php-ext-configure gd --with-jpeg-dir=/usr/include --with-webp-dir=/usr/include --with-freetype-dir=/usr/include && \
+    docker-php-ext-install pdo_mysql mbstring sockets gd opcache exif gmp bcmath intl
 
 RUN \
     pecl install redis && \
@@ -27,17 +31,14 @@ FROM php:7.2-fpm AS final
 
 RUN \
     apt-get update && \
-    apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libfreetype6-dev libgmp-dev libicu-dev && \
+    apt-get install -y libwebp-dev libjpeg-dev libpng-dev libfreetype6-dev libgmp-dev libicu-dev && \
     apt-get clean && \
+    apt-get autoremove -y && \
     rm -rf /var/lib/apt/list/*
-
-RUN \
-    docker-php-ext-configure gd --with-jpeg-dir=/usr/include --with-webp-dir=/usr/include --with-freetype-dir=/usr/include && \
-    docker-php-ext-install pdo_mysql mbstring sockets gd opcache exif gmp bcmath intl
 
 COPY --from=builder /usr/local/lib/php/extensions/no-debug-non-zts-20170718/ /usr/local/lib/php/extensions/no-debug-non-zts-20170718/
 
-RUN docker-php-ext-enable redis phalcon
+RUN docker-php-ext-enable pdo_mysql mbstring sockets gd opcache exif gmp bcmath intl redis phalcon
 
 RUN \
     mkdir -p ${HOME}/php-default-conf && \
@@ -45,4 +46,4 @@ RUN \
 
 ADD ["./docker-entrypointer.sh", "/root/"]
 
-ENTRYPOINT ["sh", "-c", "${HOME}/docker-entrypointer.sh"]
+CMD ["sh", "-c", "${HOME}/docker-entrypointer.sh"]
