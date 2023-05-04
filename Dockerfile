@@ -10,13 +10,13 @@ RUN \
 
 RUN \
     pecl install redis && \
-    pecl install xdebug
+    pecl install xdebug-3.1.6
 
 RUN \
     cd ${HOME} && \
     git clone https://github.com/phalcon/cphalcon.git && \
     cd cphalcon && \
-    git checkout v3.4.4 && \
+    git checkout v3.4.5 && \
     cd build/php7/64bits && \
     phpize && \
     export CFLAGS="-O2 -g" && \
