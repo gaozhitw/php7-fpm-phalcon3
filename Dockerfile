@@ -24,6 +24,7 @@ RUN \
     make && make install
 
 FROM caddy:2.6 AS caddy
+FROM composer:2 AS composer
 
 FROM php:7.2-fpm AS final
 
@@ -46,6 +47,7 @@ RUN \
     cp -R /usr/local/etc/* ${HOME}/php-default-conf
 
 COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 ADD ["./docker-entrypointer.sh", "/root/"]
 
