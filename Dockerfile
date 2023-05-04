@@ -33,7 +33,7 @@ FROM php:7.2-fpm AS final
 
 RUN \
     apt-get update && \
-    apt-get install -y libwebp-dev libjpeg-dev libpng-dev libfreetype6-dev libgmp-dev libicu-dev && \
+    apt-get install -y git libwebp-dev libjpeg-dev libpng-dev libfreetype6-dev libgmp-dev libicu-dev && \
     apt-get clean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/list/*
