@@ -23,6 +23,7 @@ RUN \
     ./configure && \
     make && make install
 
+FROM caddy:2.6 AS caddy
 
 FROM php:7.2-fpm AS final
 
@@ -43,6 +44,8 @@ RUN docker-php-ext-enable pdo_mysql mbstring sockets gd opcache exif gmp bcmath 
 RUN \
     mkdir -p ${HOME}/php-default-conf && \
     cp -R /usr/local/etc/* ${HOME}/php-default-conf
+
+COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
 
 ADD ["./docker-entrypointer.sh", "/root/"]
 
